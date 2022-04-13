@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jump_height: 10
+  jump_height: 15
 --- !u!95 &242225073
 Animator:
   serializedVersion: 3
@@ -395,8 +395,8 @@ GameObject:
   - component: {fileID: 788845368}
   - component: {fileID: 788845367}
   m_Layer: 0
-  m_Name: Square
-  m_TagString: Untagged
+  m_Name: Ground
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
