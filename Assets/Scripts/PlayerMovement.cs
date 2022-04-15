@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator anim;
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
+    private float horizontalInput;
 
 
     private void Awake()
@@ -31,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Left right movement
-        float horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = Input.GetAxis("Horizontal");
         
 
 
@@ -47,28 +48,54 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("grounded", isGrounded());
 
         // Wall Jump Logic
-        if(wallJumpCooldown < 0.2f)
+        if (wallJumpCooldown > 0.2f)
         {
-            // Jumping
-            if (Input.GetKey(KeyCode.Space) && isGrounded())
-                Jump();
+           
+            
+               
 
             body.velocity = new Vector2(Input.GetAxis("Horizontal") * speed, body.velocity.y);
 
-            if(onWall() && !isGrounded())
+            if (onWall() && !isGrounded())
             {
                 body.gravityScale = 0;
                 body.velocity = Vector2.zero;
             }
+            else
+                body.gravityScale = 6;
+
+            // Jumping
+            if (Input.GetKey(KeyCode.Space))
+                Jump();
         }
+        else
+            wallJumpCooldown += Time.deltaTime;
     }
 
     private void Jump()
     {
-        body.velocity = new Vector2(body.velocity.x, jump_height);
-        anim.SetTrigger("jump");
+        if (isGrounded())
+        {
+            body.velocity = new Vector2(body.velocity.x, jump_height);
+            anim.SetTrigger("jump");
+        }
+        else if(onWall() && !isGrounded())
+        {
+            if(horizontalInput == 0)
+            {
+                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 10, 0);
+                transform.localScale = new Vector2(-Mathf.Sign(transform.localScale.x), transform.localScale.y);
+            }
+            else
+            {
+                body.velocity = new Vector2(-Mathf.Sign(transform.localScale.x) * 3, 6);
+            }
+            wallJumpCooldown = 0;
+            
+        }
         
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
