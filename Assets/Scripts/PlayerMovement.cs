@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private BoxCollider2D boxCollider;
     private float wallJumpCooldown;
     private float horizontalInput;
-
+    //private float verticalInput;
 
     private void Awake()
     {
@@ -33,7 +33,9 @@ public class PlayerMovement : MonoBehaviour
     {
         // Left right movement
         horizontalInput = Input.GetAxis("Horizontal");
-        
+
+        //Vertical movement
+        //verticalInput = Input.GetAxis("Vertical");
 
 
         // Flip Player when turning around
@@ -41,8 +43,13 @@ public class PlayerMovement : MonoBehaviour
             transform.localScale = new Vector2(6, 6);
         else if (horizontalInput < -0.01f)
             transform.localScale = new Vector2(-6, 6);
-
-        
+        //Flip shield when up or down
+        /*
+        if (verticalInput > 0.01f)
+            transform.position = new Vector2(6, 6);
+        else if (verticalInput < -0.01f)
+            transform.position = new Vector2(6, -6);
+        */
         //Set Animator Params
         anim.SetBool("run", horizontalInput != 0);
         anim.SetBool("grounded", isGrounded());
