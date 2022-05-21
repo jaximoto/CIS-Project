@@ -14,16 +14,22 @@ public class shields : MonoBehaviour
         transform.position = new Vector3(player.position.x + aheadPlayer, player.position.y, player.position.z);
     }
 
-    
+
     // Update is called once per frame
     void Update()
     {
         verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
         if (horizontalInput > 0.01f)
+        {
             transform.position = new Vector3(player.position.x + aheadPlayer, player.position.y, player.position.z);
+            transform.localScale = new Vector2(6, 6);
+        }
         else if (horizontalInput < -0.01f)
+        {
             transform.position = new Vector3(player.position.x - aheadPlayer, player.position.y, player.position.z);
+            transform.localScale = new Vector2(-6, 6);
+        }
         //Flip shield when up or down
 
         if (verticalInput > 0.01f)
